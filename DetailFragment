@@ -1,8 +1,7 @@
 package com.example.githubuserapp
 
-import android.content.Intent
 import android.os.Bundle
-import android.os.Parcelable
+import android.util.Log
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -12,44 +11,37 @@ import android.widget.TextView
 
 class DetailFragment : Fragment() {
 
-    lateinit var detailAvatar: ImageView
-    lateinit var detailName: TextView
-    lateinit var detailUsername: TextView
-    lateinit var detailLocation: TextView
-    lateinit var detailCompany: TextView
-    lateinit var detailRepository: TextView
-    lateinit var detailFollowers: TextView
-    lateinit var detailFollowing: TextView
-
-    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
-        super.onViewCreated(view, savedInstanceState)
-        detailAvatar = view.findViewById(R.id.detail_avatar)
-        detailName = view.findViewById(R.id.detail_name)
-        detailUsername = view.findViewById(R.id.detail_username)
-        detailLocation = view.findViewById(R.id.detail_location)
-        detailCompany = view.findViewById(R.id.detail_company)
-        detailRepository = view.findViewById(R.id.detail_repository)
-        detailFollowers = view.findViewById(R.id.detail_followers)
-        detailFollowing = view.findViewById(R.id.detail_following)
-    }
+    private val detailAvatar: ImageView? = view?.findViewById(R.id.detail_avatar)
+    private val detailName: TextView? = view?.findViewById(R.id.detail_name)
+    private val detailUsername: TextView? = view?.findViewById(R.id.detail_username)
+    private val detailLocation: TextView? = view?.findViewById(R.id.detail_location)
+    private val detailCompany: TextView? = view?.findViewById(R.id.detail_company)
+    private val detailRepository: TextView? = view?.findViewById(R.id.detail_repository)
+    private val detailFollowers: TextView? = view?.findViewById(R.id.detail_followers)
+    private val detailFollowing: TextView? = view?.findViewById(R.id.detail_following)
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
 
-        val bundle = Bundle()
-        val item = bundle.getParcelable<User>("parcel")
-        detailName.text = item?.name
-        detailUsername.text = item?.username
-        detailLocation.text = item?.location
-        detailCompany.text = item?.company
-        detailRepository.text = item?.repository
-        detailFollowers.text = item?.followers
-        detailFollowing.text = item?.following
+
+        val bundle = arguments?.getParcelable<User>("parcel")
+        Log.d("RECEIVED", bundle?.name)
+
+        detailAvatar?.setImageResource(bundle?.avatar!!)
+        detailName?.text = bundle?.name
+        detailUsername?.text = bundle?.username
+        detailLocation?.text = bundle?.location
+        detailCompany?.text = bundle?.company
+        detailRepository?.text = bundle?.repository
+        detailFollowers?.text = bundle?.followers
+        detailFollowing?.text = bundle?.following
+
+        Log.d("isinya", bundle?.name.toString())
+        Log.d("namanya", detailName.toString())
 
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_detail, container, true)
+        return inflater.inflate(R.layout.fragment_detail, container, false)
     }
-
 }
